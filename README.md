@@ -22,25 +22,25 @@ This app is built for meeting-room display screens, especially Android TV device
 
 Choose the meeting room / emirate before the app starts tracking the active meeting.
 
-![Select Room](Screenshots/Select_Room.jpg)
+<img src="Screenshots/Select_Room.jpg" alt="Select Room" width="1080" height="1920" />
 
 ### Dashboard Countdown
 
 Shows the active meeting state and countdown experience on the main dashboard.
 
-![Dashboard Countdown](Screenshots/Dashboard_Countdown.jpg)
+<img src="Screenshots/Dashboard_Countdown.jpg" alt="Dashboard Countdown" width="1080" height="1920" />
 
 ### Notification Countdown
 
 Displays the ongoing meeting countdown in the notification area.
 
-![Notification Countdown](Screenshots/Notification_Countdown.jpg)
+<img src="Screenshots/Notification_Countdown.jpg" alt="Notification Countdown" width="1080" height="1920" />
 
 ### Meeting Concluded Warning
 
 Warns users when the meeting has ended and the room should be made available.
 
-![Meeting Concluded Warning](Screenshots/Time_Concluded_Warning.jpg)
+<img src="Screenshots/Time_Concluded_Warning.jpg" alt="Meeting Concluded Warning" width="1080" height="1920" />
 
 ## Project Structure
 
