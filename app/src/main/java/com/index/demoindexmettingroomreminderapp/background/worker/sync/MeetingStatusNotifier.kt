@@ -1,4 +1,4 @@
-package com.index.demoindexmettingroomreminderapp.worker.sync
+package com.index.demoindexmettingroomreminderapp.background.worker.sync
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

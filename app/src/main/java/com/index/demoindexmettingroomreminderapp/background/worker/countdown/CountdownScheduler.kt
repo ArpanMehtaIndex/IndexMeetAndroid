@@ -1,4 +1,4 @@
-package com.index.demoindexmettingroomreminderapp.worker.countdown
+package com.index.demoindexmettingroomreminderapp.background.worker.countdown
 
 import android.content.Context
 import androidx.work.Constraints
@@ -46,13 +46,13 @@ object CountdownScheduler {
         }
 
         val inputData = Data.Builder()
-            .putString(CountdownWorker.KEY_MEETING_SUBJECT, activeMeeting.subject)
-            .putLong(CountdownWorker.KEY_MEETING_START_TIME, startTime)
-            .putLong(CountdownWorker.KEY_MEETING_END_TIME, endTime)
+            .putString(_root_ide_package_.com.index.demoindexmettingroomreminderapp.background.worker.countdown.CountdownWorker.KEY_MEETING_SUBJECT, activeMeeting.subject)
+            .putLong(_root_ide_package_.com.index.demoindexmettingroomreminderapp.background.worker.countdown.CountdownWorker.KEY_MEETING_START_TIME, startTime)
+            .putLong(_root_ide_package_.com.index.demoindexmettingroomreminderapp.background.worker.countdown.CountdownWorker.KEY_MEETING_END_TIME, endTime)
             .build()
 
         val initialDelayMillis = (startTime - now).coerceAtLeast(0L)
-        val request = OneTimeWorkRequestBuilder<CountdownWorker>()
+        val request = OneTimeWorkRequestBuilder<com.index.demoindexmettingroomreminderapp.background.worker.countdown.CountdownWorker>()
             .setInputData(inputData)
             .setConstraints(
                 Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()

@@ -1,4 +1,4 @@
-package com.index.demoindexmettingroomreminderapp.worker.countdown
+package com.index.demoindexmettingroomreminderapp.background.worker.countdown
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -26,12 +26,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -48,7 +48,6 @@ import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
-import com.index.demoindexmettingroomreminderapp.BuildConfig
 import com.index.demoindexmettingroomreminderapp.R
 import com.index.demoindexmettingroomreminderapp.data.Constants
 import com.index.demoindexmettingroomreminderapp.utils.AppLog
@@ -135,7 +134,7 @@ class CountdownWorker(
     private var countdownOverlayView: ComposeView? = null
     private var finishedOverlayView: ComposeView? = null
     private var countdownText by mutableStateOf("")
-    private var lifecycleOwner: FloatingViewLifecycleOwner? = null
+    private var lifecycleOwner: com.index.demoindexmettingroomreminderapp.background.worker.countdown.FloatingViewLifecycleOwner? = null
     private var beepPlayer: MediaPlayer? = null
     private var meetingSBJ: String = ""
     @Volatile

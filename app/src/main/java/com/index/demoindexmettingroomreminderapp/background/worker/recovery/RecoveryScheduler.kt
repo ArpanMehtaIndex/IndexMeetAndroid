@@ -1,4 +1,4 @@
-package com.index.demoindexmettingroomreminderapp.worker.recovery
+package com.index.demoindexmettingroomreminderapp.background.worker.recovery
 
 import android.content.Context
 import androidx.work.Constraints

@@ -1,13 +1,14 @@
-package com.index.demoindexmettingroomreminderapp.worker.sync
+package com.index.demoindexmettingroomreminderapp.background.worker.sync
 
 import android.content.Context
+import com.index.demoindexmettingroomreminderapp.background.worker.countdown.CountdownScheduler
 import com.index.demoindexmettingroomreminderapp.data.Constants
 import com.index.demoindexmettingroomreminderapp.data.Emirate
 import com.index.demoindexmettingroomreminderapp.data.PreferenceHelper
 import com.index.demoindexmettingroomreminderapp.utils.AppLog
 import com.index.demoindexmettingroomreminderapp.utils.parseEventDateTime
 import com.index.demoindexmettingroomreminderapp.web.repository.MeetingAppRepo
-import com.index.demoindexmettingroomreminderapp.worker.countdown.CountdownScheduler
+
 import kotlinx.coroutines.flow.first
 import java.text.SimpleDateFormat
 import java.util.Calendar

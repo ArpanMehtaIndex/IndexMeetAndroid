@@ -1,4 +1,4 @@
-package com.index.demoindexmettingroomreminderapp.worker.sync
+package com.index.demoindexmettingroomreminderapp.background.worker.sync
 
 import android.content.Context
 import androidx.work.CoroutineWorker
