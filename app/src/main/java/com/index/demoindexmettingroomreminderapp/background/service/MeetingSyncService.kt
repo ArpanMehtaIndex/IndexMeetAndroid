@@ -1,4 +1,4 @@
-package com.index.demoindexmettingroomreminderapp.service
+package com.index.demoindexmettingroomreminderapp.background.service
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -13,8 +13,6 @@ import androidx.core.content.ContextCompat
 import com.index.demoindexmettingroomreminderapp.R
 import com.index.demoindexmettingroomreminderapp.data.Constants
 import com.index.demoindexmettingroomreminderapp.utils.AppLog
-import com.index.demoindexmettingroomreminderapp.worker.sync.MeetingSyncEngine
-import com.index.demoindexmettingroomreminderapp.worker.sync.MeetingSyncScheduler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -73,11 +71,11 @@ class MeetingSyncService : Service() {
 
         syncJob = scope.launch {
             try {
-                val outcome = MeetingSyncEngine.run(applicationContext)
+                val outcome = _root_ide_package_.com.index.demoindexmettingroomreminderapp.background.worker.sync.MeetingSyncEngine.run(applicationContext)
                 if (!outcome.success) {
                     AppLog.e("MeetingSyncService", "Foreground sync finished with retryable failure.")
                 }
-                MeetingSyncScheduler.scheduleNextSync(applicationContext)
+                _root_ide_package_.com.index.demoindexmettingroomreminderapp.background.worker.sync.MeetingSyncScheduler.scheduleNextSync(applicationContext)
             } catch (e: Exception) {
                 AppLog.e("MeetingSyncService", "Foreground sync failed: ${e.message}")
             } finally {

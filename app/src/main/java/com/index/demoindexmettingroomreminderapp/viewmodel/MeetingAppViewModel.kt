@@ -5,6 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.index.demoindexmettingroomreminderapp.background.worker.countdown.manager.CountdownInfo
+import com.index.demoindexmettingroomreminderapp.background.worker.countdown.manager.CountdownManager
 import com.index.demoindexmettingroomreminderapp.data.Constants
 import com.index.demoindexmettingroomreminderapp.data.Emirate
 import com.index.demoindexmettingroomreminderapp.data.PreferenceHelper
@@ -14,15 +16,13 @@ import com.index.demoindexmettingroomreminderapp.web.UiState
 import com.index.demoindexmettingroomreminderapp.web.model.response.CalendarViewResponse
 import com.index.demoindexmettingroomreminderapp.web.model.response.TokenResponse
 import com.index.demoindexmettingroomreminderapp.web.repository.MeetingAppRepo
-import com.index.demoindexmettingroomreminderapp.worker.countdown.manager.CountdownInfo
-import com.index.demoindexmettingroomreminderapp.worker.countdown.manager.CountdownManager
+
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import java.io.InputStreamReader
 import java.text.SimpleDateFormat

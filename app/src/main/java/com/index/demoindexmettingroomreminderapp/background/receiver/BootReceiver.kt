@@ -1,20 +1,18 @@
-package com.index.demoindexmettingroomreminderapp.receiver
+package com.index.demoindexmettingroomreminderapp.background.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.index.demoindexmettingroomreminderapp.data.PreferenceHelper
-import com.index.demoindexmettingroomreminderapp.worker.recovery.RecoveryScheduler
-import com.index.demoindexmettingroomreminderapp.worker.sync.MeetingSyncScheduler
 
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
             Intent.ACTION_BOOT_COMPLETED,
             Intent.ACTION_MY_PACKAGE_REPLACED -> {
-                RecoveryScheduler.schedulePeriodicRecovery(context)
+                _root_ide_package_.com.index.demoindexmettingroomreminderapp.background.worker.recovery.RecoveryScheduler.schedulePeriodicRecovery(context)
                 if (PreferenceHelper.getSelectedEmirate(context) != null) {
-                    MeetingSyncScheduler.scheduleImmediateSync(context)
+                    _root_ide_package_.com.index.demoindexmettingroomreminderapp.background.worker.sync.MeetingSyncScheduler.scheduleImmediateSync(context)
                 }
             }
         }

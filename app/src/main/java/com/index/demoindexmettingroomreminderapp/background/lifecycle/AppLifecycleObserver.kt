@@ -1,4 +1,4 @@
-package com.index.demoindexmettingroomreminderapp.lifecycle
+package com.index.demoindexmettingroomreminderapp.background.lifecycle
 
 
 import androidx.lifecycle.DefaultLifecycleObserver

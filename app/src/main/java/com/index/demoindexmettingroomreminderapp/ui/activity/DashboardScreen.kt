@@ -2,9 +2,6 @@ package com.index.demoindexmettingroomreminderapp.ui.activity
 
 import android.content.Context
 import android.speech.tts.TextToSpeech
-import android.util.Log
-
-import com.index.demoindexmettingroomreminderapp.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,10 +12,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -37,12 +39,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Place
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -72,18 +68,18 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.index.demoindexmettingroomreminderapp.BuildConfig
+import com.index.demoindexmettingroomreminderapp.R
+import com.index.demoindexmettingroomreminderapp.background.worker.TokenRefreshWorker
+import com.index.demoindexmettingroomreminderapp.background.worker.countdown.CountdownScheduler
+import com.index.demoindexmettingroomreminderapp.background.worker.sync.MeetingSyncScheduler
 import com.index.demoindexmettingroomreminderapp.data.Constants
 import com.index.demoindexmettingroomreminderapp.data.Emirate
 import com.index.demoindexmettingroomreminderapp.data.PreferenceHelper
-import com.index.demoindexmettingroomreminderapp.utils.AppLog
 import com.index.demoindexmettingroomreminderapp.utils.formatToAmPmCompatible
 import com.index.demoindexmettingroomreminderapp.utils.parseEventDateTime
 import com.index.demoindexmettingroomreminderapp.viewmodel.MeetingAppViewModel
 import com.index.demoindexmettingroomreminderapp.web.UiState
-import com.index.demoindexmettingroomreminderapp.web.model.response.CalendarEvent
-import com.index.demoindexmettingroomreminderapp.worker.TokenRefreshWorker
-import com.index.demoindexmettingroomreminderapp.worker.countdown.CountdownScheduler
-import com.index.demoindexmettingroomreminderapp.worker.sync.MeetingSyncScheduler
+
 import kotlinx.coroutines.delay
 import java.util.Date
 import java.util.concurrent.TimeUnit
