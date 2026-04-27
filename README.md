@@ -54,23 +54,23 @@ Current files under the `worker` package and their roles:
 
 - `TokenRefreshWorker.kt`
   Periodically refreshes the API access token.
-- `recovery/RecoveryScheduler.kt`
+- `background/worker/recovery/RecoveryScheduler.kt`
   Schedules the periodic recovery worker with `WorkManager`.
-- `recovery/RecoveryWorker.kt`
+- `background/worker/recovery/RecoveryWorker.kt`
   Safety-net worker that re-requests a sync after boot, wake, or long idle periods.
-- `sync/MeetingSyncScheduler.kt`
+- `background/worker/sync/MeetingSyncScheduler.kt`
   Schedules immediate sync and next sync runs.
-- `sync/MeetingSyncWorker.kt`
+- `background/worker/sync/MeetingSyncWorker.kt`
   Executes one background sync cycle.
-- `sync/MeetingSyncEngine.kt`
+- `background/worker/sync/MeetingSyncEngine.kt`
   Contains the main sync logic: token check, API call, active-meeting detection, notification update, and countdown scheduling.
-- `sync/MeetingStatusNotifier.kt`
+- `background/worker/sync/MeetingStatusNotifier.kt`
   Updates the ongoing meeting status notification shown to the user.
-- `countdown/CountdownScheduler.kt`
+- `background/countdown/CountdownScheduler.kt`
   Schedules countdown work for the currently active meeting.
-- `countdown/CountdownWorker.kt`
+- `background/countdown/CountdownWorker.kt`
   Runs the active-meeting countdown and handles overlay, notification, beep, and TTS alerts.
-- `countdown/manager/CountdownManager.kt`
+- `background/countdown/manager/CountdownManager.kt`
   Internal countdown state/event helper used by UI-facing countdown flow.
 
 In short, the primary worker flow now is:
