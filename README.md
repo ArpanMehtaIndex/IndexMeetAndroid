@@ -48,6 +48,40 @@ The current background design is intended to be safer for Android TV and Android
 - `CountdownWorker`
   Handles active-meeting countdown UI/alerts.
 
+## Worker File Roles
+
+Current files under the `worker` package and their roles:
+
+- `TokenRefreshWorker.kt`
+  Periodically refreshes the API access token.
+- `recovery/RecoveryScheduler.kt`
+  Schedules the periodic recovery worker with `WorkManager`.
+- `recovery/RecoveryWorker.kt`
+  Safety-net worker that re-requests a sync after boot, wake, or long idle periods.
+- `sync/MeetingSyncScheduler.kt`
+  Schedules immediate sync and next sync runs.
+- `sync/MeetingSyncWorker.kt`
+  Executes one background sync cycle.
+- `sync/MeetingSyncEngine.kt`
+  Contains the main sync logic: token check, API call, active-meeting detection, notification update, and countdown scheduling.
+- `sync/MeetingStatusNotifier.kt`
+  Updates the ongoing meeting status notification shown to the user.
+- `countdown/CountdownScheduler.kt`
+  Schedules countdown work for the currently active meeting.
+- `countdown/CountdownWorker.kt`
+  Runs the active-meeting countdown and handles overlay, notification, beep, and TTS alerts.
+- `countdown/manager/CountdownManager.kt`
+  Internal countdown state/event helper used by UI-facing countdown flow.
+
+In short, the primary worker flow now is:
+
+- `RecoveryWorker` -> `MeetingSyncWorker` -> `MeetingSyncEngine` -> `CountdownScheduler` -> `CountdownWorker`
+
+Files that are more legacy or secondary now:
+
+- `TokenRefreshWorker.kt`
+  Still useful, but separate from the main active-meeting polling flow.
+
 ## Android TV Notes
 
 This app is designed for Android TV devices, including CleverTouch panels. Background behavior on TV devices depends on both app code and OEM firmware behavior.
