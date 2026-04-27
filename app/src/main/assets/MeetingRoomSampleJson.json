@@ -1,0 +1,61 @@
+{
+  "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('auh%40index.ae')/calendarView",
+  "value": [
+    {
+      "attendees": [
+        {
+          "emailAddress": {
+            "address": "a.mehta@index.ae",
+            "name": "Arpan Mehta"
+          },
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required"
+        },
+        {
+          "emailAddress": {
+            "address": "auh@index.ae",
+            "name": "Abu Dhabi Meeting Room"
+          },
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "resource"
+        }
+      ],
+      "body": {
+        "content": "",
+        "contentType": "html"
+      },
+      "end": {
+        "dateTime": "2026-02-08T09:58:00.0000000",
+        "timeZone": "UTC"
+      },
+      "id": "AAMkAGNlNGFhMzdmLTUwMjUtNGFmYS05NTlmLTZlZGIyYTA1YzE0NABGAAAAAADYPtUT3UQ5Qr6s-0BMfVGEBwBNezMrF4SuT7uY2N5Va7tPAAAAAAENAABNezMrF4SuT7uY2N5Va7tPAAB4_WNRBBB=",
+      "isAllDay": false,
+      "isCancelled": false,
+      "location": {
+        "displayName": "Abu Dhabi Meeting Room"
+      },
+      "locations": [
+        {
+          "displayName": "Abu Dhabi Meeting Room"
+        }
+      ],
+      "organizer": {
+        "emailAddress": {
+          "address": "a.mehta@index.ae",
+          "name": "Arpan Mehta"
+        }
+      },
+      "start": {
+        "dateTime": "2026-02-08T09:43:00.0000000",
+        "timeZone": "UTC"
+      },
+      "subject": "INDEX Meet"
+    }
+  ]
+}

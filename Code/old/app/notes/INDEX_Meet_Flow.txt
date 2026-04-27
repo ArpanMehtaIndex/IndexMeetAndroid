@@ -1,0 +1,16 @@
+INDEX Meet Flow
+
+1) API call starts in MeetingAppViewModel.fetchCalendarEvents() (app/src/main/java/com/index/demoindexmettingroomreminderapp/viewmodel/MeetingAppViewModel.kt).
+2) It builds start/end window in UTC and calls MeetingAppRepo.getCalendarEvents(...) (repo layer).
+3) API response is parsed into CalendarViewResponse and stored in _calendarUiState.
+4) DashboardScreen observes calendarUiState and picks the active meeting (start < now < end) (app/src/main/java/com/index/demoindexmettingroomreminderapp/ui/activity/DashboardScreen.kt).
+5) If active meeting exists, dashboard renders “ONGOING” card with subject/start/end; otherwise shows “NO_MEETING_IN_PROGRESS”.
+6) When meetings are loaded, CountdownScheduler.scheduleCountdownWorkers(...) is called to schedule WorkManager jobs for each event (app/src/main/java/com/index/demoindexmettingroomreminderapp/worker/countdown/CountdownScheduler.kt).
+7) Each worker gets input data: subject, startTimeMillis, endTimeMillis.
+8) Workers are scheduled with setInitialDelay(startTime - now) so they only start at meeting time.
+9) When a worker starts, CountdownWorker.doWork() reads input data and sets initial foreground notification (app/src/main/java/com/index/demoindexmettingroomreminderapp/worker/countdown/CountdownWorker.kt).
+10) Before the 10‑minute window, it hides overlay and waits; during countdown it updates notification every second and shows the overlay timer.
+11) For UI countdown state, CountdownManager.startCountdownForMeeting emits a flow event.
+12) MeetingAppViewModel collects this flow and updates activeCountdownMeetingId + countdownSeconds, which dashboard uses to highlight the active meeting.
+13) MeetingSyncService can also fetch meetings in background and call CountdownScheduler.scheduleCountdownWorkers(...) (app/src/main/java/com/index/demoindexmettingroomreminderapp/service/MeetingSyncService.kt).
+14) MeetingEndWorker and CountdownService are an alternate path to start countdown via a service using intent extras (app/src/main/java/com/index/demoindexmettingroomreminderapp/worker/countdown/MeetingEndWorker.kt, app/src/main/java/com/index/demoindexmettingroomreminderapp/service/CountdownService.kt).

@@ -1,0 +1,428 @@
+package com.index.demoindexmettingroomreminderapp.worker.countdown
+
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.content.pm.ServiceInfo
+import android.graphics.PixelFormat
+import android.os.Build
+import android.speech.tts.TextToSpeech
+import android.view.Gravity
+import android.view.WindowManager
+import android.view.View
+import androidx.compose.animation.core.copy
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
+import androidx.lifecycle.setViewTreeLifecycleOwner
+import androidx.savedstate.SavedStateRegistry
+import androidx.savedstate.SavedStateRegistryController
+import androidx.savedstate.SavedStateRegistryOwner
+import androidx.savedstate.setViewTreeSavedStateRegistryOwner
+import androidx.work.CoroutineWorker
+import androidx.work.ForegroundInfo
+import androidx.work.WorkerParameters
+import com.index.demoindexmettingroomreminderapp.R
+import com.index.demoindexmettingroomreminderapp.data.Constants
+import com.index.demoindexmettingroomreminderapp.utils.AppLog
+import com.index.demoindexmettingroomreminderapp.utils.OverlayPermissionHelper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.invoke
+import kotlinx.coroutines.withContext
+import java.util.Locale
+import java.util.concurrent.TimeUnit
+
+
+// --- Create a Custom Lifecycle Owner class inside or outside your worker ---
+private class FloatingViewLifecycleOwner : LifecycleOwner,
+    SavedStateRegistryOwner {
+    private val lifecycleRegistry = LifecycleRegistry(this)
+    private val savedStateRegistryController = SavedStateRegistryController.create(this)
+
+    override val lifecycle: Lifecycle
+        get() = lifecycleRegistry
+
+    override val savedStateRegistry: SavedStateRegistry
+        get() = savedStateRegistryController.savedStateRegistry
+
+    fun onCreate() {
+        savedStateRegistryController.performRestore(null)
+        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    }
+
+    fun onResume() {
+        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    }
+
+    fun onStop() {
+        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
+    }
+
+    fun onDestroy() {
+        lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    }
+}
+class CountdownWorker(
+    private val context: Context,
+    workerParams: WorkerParameters
+) : CoroutineWorker(context, workerParams), TextToSpeech.OnInitListener {
+
+    private lateinit var tts: TextToSpeech
+    private var isTtsInitialized = false
+    private val windowManager by lazy { context.getSystemService(Context.WINDOW_SERVICE) as WindowManager }
+    lateinit var overlayView: ComposeView
+    private var countdownText by mutableStateOf("")
+    private var lifecycleOwner: FloatingViewLifecycleOwner? = null
+
+    companion object {
+        const val NOTIFICATION_CHANNEL_ID = "MEETING_COUNTDOWN_CHANNEL"
+        const val NOTIFICATION_ID = 12345
+        const val KEY_MEETING_SUBJECT = "KEY_MEETING_SUBJECT"
+        const val KEY_MEETING_START_TIME = "KEY_MEETING_START_TIME"
+        const val KEY_MEETING_END_TIME = "KEY_MEETING_END_TIME"
+        const val ALERTING_NOTIFICATION_CHANNEL_ID = "MEETING_ALERT_CHANNEL"
+    }
+
+    override suspend fun doWork(): Result {
+        val meetingSubject = inputData.getString(KEY_MEETING_SUBJECT) ?: "Current Meeting"
+        val startTimeMillis = inputData.getLong(KEY_MEETING_START_TIME, 0L)
+        val endTimeMillis = inputData.getLong(KEY_MEETING_END_TIME, 0L)
+
+        if (!OverlayPermissionHelper.canDrawOverlays(context)) {
+            AppLog.e(
+                "CountdownWorker",
+                "SYSTEM_ALERT_WINDOW permission not granted."
+            )
+            return Result.failure()
+        }
+        if (endTimeMillis == 0L || System.currentTimeMillis() >= endTimeMillis) {
+            return Result.success() // Meeting is already over, do nothing.
+        }
+
+        AppLog.d("CountdownWorker:", " Starting for '$meetingSubject'")
+
+        // Initialize TTS
+        tts = TextToSpeech(context, this)
+        delay(500) // Give TTS a moment to initialize
+
+        try {
+            withContext(Dispatchers.Main) {
+                // Create the custom lifecycle and the view
+                lifecycleOwner = FloatingViewLifecycleOwner()
+                lifecycleOwner?.onCreate()
+                createOverlayView()
+                lifecycleOwner?.onResume()
+            }
+
+            val foregroundInfo = createForegroundInfo(Constants.PREPARING_MEETING_STATUS)
+            setForeground(foregroundInfo)
+
+            while (!isStopped && System.currentTimeMillis() < endTimeMillis) {
+                val now = System.currentTimeMillis()
+                val countdownStartTime = endTimeMillis - Constants.TEN_MINUTES_IN_MILLIS
+
+                // Check if we have just entered the 10-minute countdown window
+                if (now >= countdownStartTime) {
+                    if (now < startTimeMillis) {
+                        withContext(Dispatchers.Main) {
+                            if (::overlayView.isInitialized) {
+                                overlayView.visibility = android.view.View.GONE
+                            }
+                        }
+                        // Wait until the actual meeting start time before re-evaluating.
+                        val timeToWaitUntilStart = startTimeMillis - now
+                        if (timeToWaitUntilStart > 0) {
+                            delay(timeToWaitUntilStart)
+                        }
+                        continue
+                    }
+
+                    withContext(Dispatchers.Main) {
+                        overlayView.visibility = android.view.View.VISIBLE
+                    }
+                    // --- We are in the countdown phase. Start showing notifications. ---
+
+                    // Create the first, HIGH-PRIORITY notification to alert the user.
+                    val firstAlertNotification = createNotification(
+                        contentText = "${Constants.MEETING_GOING_TO_END_IN}: 10 minutes",
+                        isAlerting = true // Use the high-priority channel
+                    )
+                    // Set the initial foreground state with this alerting notification.
+                    setForeground(ForegroundInfo(NOTIFICATION_ID, firstAlertNotification))
+
+                    // Now, start the second-by-second update loop.
+                    var remainingMillis = endTimeMillis - System.currentTimeMillis()
+                    while (!isStopped && remainingMillis > 0) {
+                        val remainingSeconds = (remainingMillis / 1000).coerceAtLeast(0).toInt()
+                        val minutes = remainingSeconds / 60
+                        val seconds = remainingSeconds % 60
+                        val timeString = "${minutes.toString().padStart(2, '0')}:${
+                            seconds.toString().padStart(2, '0')
+                        }"
+                        // Update the notification SILENTLY using the low-priority channel
+                        updateNotification(
+                            "${Constants.MEETING_GOING_TO_END_IN}: $timeString",
+                            isAlerting = true
+                        )
+                        withContext(Dispatchers.Main) {
+                            countdownText = "${Constants.MEETING_GOING_TO_END_IN}: $timeString"
+                        }
+                        delay(1000)
+                        remainingMillis = endTimeMillis - System.currentTimeMillis()
+                    }
+                    break
+                } else {
+                    withContext(Dispatchers.Main) {
+                        overlayView.visibility = android.view.View.GONE
+                    }
+                    // We are not yet in the countdown window. Just wait.
+                    // You can optionally show a silent "Ongoing" notification here if you want.
+                    setForeground(createForegroundInfo("$meetingSubject: Ongoing"))
+                    val timeToWait = countdownStartTime - now
+                    if (timeToWait > 0) {
+                        delay(timeToWait)
+                    }
+                }
+            }
+
+            // --- At this point, the meeting has finished ---
+            withContext(Dispatchers.Main) {
+                hideAndRemoveOverlayView()
+            }
+            updateNotification("$meetingSubject: ${Constants.MEETING_ENDED}", false)
+            val messageToSpeak = Constants.MEETING_FINISHED_MESSAGE
+            speakMessage(messageToSpeak)
+            delay(5000) // Wait for TTS
+        } catch (e: Exception) {
+            AppLog.e("CountdownWorker: Error during countdown", e.toString())
+            return Result.failure()
+        } finally {
+            cleanupOverlayAndLifecycle()
+            if (::tts.isInitialized) {
+                tts.stop()
+                tts.shutdown()
+            }
+            val notificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.cancel(NOTIFICATION_ID)
+            AppLog.d("CountdownWorker: ", "Finishing worker, removing overlay view.")
+        }
+
+        return Result.success()
+    }
+
+    private fun createForegroundInfo(contentText: String): ForegroundInfo {
+        val notification = createNotification(contentText, true)
+
+        // For Android 14+ we must specify the service type
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            ForegroundInfo(
+                NOTIFICATION_ID,
+                notification,
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+            )
+        } else {
+            ForegroundInfo(NOTIFICATION_ID, notification)
+        }
+    }
+
+    // --- Helper Functions for Notification and TTS ---
+    private fun createNotification(contentText: String, isAlerting: Boolean): Notification {
+        createNotificationChannel()
+        val channelId =
+            if (isAlerting) ALERTING_NOTIFICATION_CHANNEL_ID else NOTIFICATION_CHANNEL_ID
+
+        val builder = NotificationCompat.Builder(context, channelId)
+            .setContentTitle("Meeting Status")
+            .setContentText(contentText)
+            .setSmallIcon(R.drawable.ic_room)
+            .setOngoing(true)
+            .setOnlyAlertOnce(true)
+
+        // Set the priority for the builder as well
+        if (isAlerting) {
+            builder.priority = NotificationCompat.PRIORITY_HIGH
+            builder.setVibrate(longArrayOf(0, 500, 250, 500)) // Optional: add vibration
+        }
+
+        return builder.build()
+    }
+
+    private fun updateNotification(contentText: String, isAlerting: Boolean) {
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notification = createNotification(contentText, isAlerting)
+        notificationManager.notify(NOTIFICATION_ID, notification)
+    }
+
+    private fun createNotificationChannel() {
+        if (
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            /* val name = "Meeting Countdown Channel"
+             val descriptionText = "Notifications for meeting end times"
+             val importance = NotificationManager.IMPORTANCE_HIGH
+             val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance).apply {
+                 description = descriptionText
+                 setShowBadge(true)
+                 lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+             }
+             val notificationManager =
+                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+             notificationManager.createNotificationChannel(channel)*/
+            val notificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            // 1. Your existing channel for silent updates
+            val silentChannel = NotificationChannel(
+                NOTIFICATION_CHANNEL_ID,
+                "Meeting Countdown",
+                NotificationManager.IMPORTANCE_LOW // Use LOW so it doesn't make a sound every second
+            ).apply {
+                description = "Shows the ongoing countdown for a meeting."
+            }
+            notificationManager.createNotificationChannel(silentChannel)
+
+
+            // 2. --- NEW: The High-Importance Channel for the initial alert ---
+            val alertingChannel = NotificationChannel(
+                ALERTING_NOTIFICATION_CHANNEL_ID,
+                "Meeting Countdown",
+                NotificationManager.IMPORTANCE_HIGH // Use HIGH to make it a heads-up notification
+            ).apply {
+                description = "Shows the ongoing countdown for a meeting."
+            }
+            notificationManager.createNotificationChannel(alertingChannel)
+
+        }
+    }
+
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            val desiredLocale = Locale.UK
+            val suitableVoices = tts.voices?.filter { it.locale == desiredLocale }
+            val selectedVoice = suitableVoices?.firstOrNull()
+            if (selectedVoice != null) {
+                val result = tts.setVoice(selectedVoice)
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    AppLog.e("TTS:", "The selected voice is not supported, falling back to default.")
+                    tts.language = Locale.US
+                } else {
+                    AppLog.d("TTS:", "Successfully set voice to: ${selectedVoice.name}")
+                }
+            } else {
+                AppLog.d("TTS:", "UK is not found ")
+                tts.language = Locale.US
+            }
+            isTtsInitialized = true
+
+        } else {
+            AppLog.e("TTS: ", "Initialization Failed!")
+        }
+    }
+
+    private fun speakMessage(message: String) {
+        if (isTtsInitialized) {
+            tts.speak(message, TextToSpeech.QUEUE_FLUSH, null, null)
+        }
+    }
+
+    private fun createOverlayView() {
+        overlayView = ComposeView(context).apply {
+            lifecycleOwner?.let { owner ->
+                this.setViewTreeLifecycleOwner(owner)
+                this.setViewTreeSavedStateRegistryOwner(owner)
+            }
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                Card(
+                    modifier = Modifier.clip(RoundedCornerShape(16.dp)),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.White
+                    ),
+                    border = BorderStroke(2.dp, Color(0xff1979b7)),
+                    elevation = CardDefaults.cardElevation(
+                        defaultElevation = 6.dp
+                    )
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                    ) {
+                        Text(
+                            text = countdownText,
+                            color = Color(0xff1979b7),
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+            }
+        }
+
+        val params = WindowManager.LayoutParams(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+            PixelFormat.TRANSLUCENT
+        ).apply {
+            gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+            y = 100 // Pixels from the top
+        }
+
+        windowManager.addView(overlayView, params)
+    }
+
+    private fun removeOverlayView() {
+        if (::overlayView.isInitialized) {
+            windowManager.removeView(overlayView)
+        }
+    }
+
+    private fun hideAndRemoveOverlayView() {
+        if (::overlayView.isInitialized) {
+            overlayView.visibility = View.GONE
+            try {
+                if (overlayView.isAttachedToWindow) {
+                    windowManager.removeViewImmediate(overlayView)
+                }
+            } catch (_: Exception) {
+                // View might not be attached; ignore.
+            }
+        }
+    }
+
+    private suspend fun cleanupOverlayAndLifecycle() {
+        withContext(Dispatchers.Main) {
+            // Remove the view and destroy the custom lifecycle
+            hideAndRemoveOverlayView()
+            lifecycleOwner?.onStop()
+            lifecycleOwner?.onDestroy()
+            lifecycleOwner = null
+        }
+    }
+
+}

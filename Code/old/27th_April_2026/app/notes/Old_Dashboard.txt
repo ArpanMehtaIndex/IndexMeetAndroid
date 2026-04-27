@@ -1,0 +1,165 @@
+/* Meeting with list code
+when (val state = calendarState) {
+    is UiState.Loading -> {
+        CircularProgressIndicator()
+        Text("Fetching meetings...")
+    }
+    is UiState.Success -> {
+        Text(
+            "Today's meetings lists",
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier.padding(bottom = 2.dp),
+            color = Constants.THEME_COLOR,
+        )
+
+        // --- Box container for LazyColumn and Scrollbar ---
+        Box(modifier = Modifier.fillMaxSize()) {
+            val listState = rememberLazyListState()
+
+            LazyColumn(
+                state = listState, // Attach the state here
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 16.dp, bottom = 16.dp)
+            ) {
+                itemsIndexed(state.data.value) { index, event ->
+                    // --- LOGIC TO DETERMINE IF THE MEETING IS ACTIVE ---
+                    val startTime = parseEventDateTime(event.start.dateTime, event.start.timeZone)
+                    val endTime = parseEventDateTime(event.end.dateTime, event.end.timeZone)
+
+                    val isMeetingActive = if (startTime != null && endTime != null) {
+                        currentTime.after(startTime) && currentTime.before(endTime)
+                    } else {
+                        false
+                    }
+
+                    // Highlight if the meeting is active OR if it's the one with the countdown
+                    val isHighlighted = isMeetingActive || (showCountdown && event.id == activeCountdownMeetingId)
+
+                    val cardBackgroundColor = if (isHighlighted) {
+                        Constants.MEETING_HIGH_LIGHT_COLOR // A light green color for "active"
+                    } else {
+                        MaterialTheme.colorScheme.surface // Default card color
+                    }
+
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 12.dp, bottom = 12.dp),
+                        elevation = CardDefaults.cardElevation(2.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = cardBackgroundColor
+                        )
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(12.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(32.dp)
+                                */
+/*.clickable {
+                                    val joinUrl = event.onlineMeeting?.joinUrl
+                                    if (!joinUrl.isNullOrEmpty()) {
+                                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(joinUrl))
+                                        try {
+                                            context.startActivity(intent)
+                                        } catch (e: Exception) {
+                                            Toast.makeText(context, "Could not open meeting link.", Toast.LENGTH_SHORT).show()
+                                            e.printStackTrace()
+                                        }
+                                    } else {
+                                        Toast.makeText(context, "This is not an online meeting.", Toast.LENGTH_SHORT).show()
+                                    }
+                                }*//*
+,
+                                contentAlignment = Alignment.Center
+                            ) {
+                                */
+/*Icon(
+                                    painter = painterResource(id = R.drawable.ic_teams),
+                                    contentDescription = "Meeting Details",
+                                    tint = Color.Unspecified
+                                )*//*
+
+                                Text(
+                                    text = "${index + 1}",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 16.sp,
+                                    color = Constants.THEME_COLOR
+                                )
+
+                            }
+                            Spacer(modifier = Modifier.width(16.dp))
+                            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                                Text("Subject : "+event.subject, fontWeight = FontWeight.Bold, color = Color(0xFF1B68A5))
+                                Text("Starts: ${formatToAmPmCompatible(event.start.dateTime, event.start.timeZone)}")
+                                Text("Ends: ${formatToAmPmCompatible(event.end.dateTime, event.end.timeZone)}")
+                                Text("Organizer: ${event.organizer.emailAddress.name}")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    is UiState.Error -> {
+        Text(
+            "Error fetching meetings: ${state.message}",
+            color = MaterialTheme.colorScheme.error
+        )
+    }
+    is UiState.Idle -> {
+        if (!showDialog) {
+            Text("Please wait, loading schedule...")
+        }
+    }
+}*/
+
+
+/*private fun scheduleMeetingEndWorkers(context: Context, meetings: List<CalendarEvent>) {
+    // Get the AlarmManager service
+    val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+    for (event in meetings) {
+        val now = System.currentTimeMillis()
+        val startTime = parseEventDateTime(event.start.dateTime, event.start.timeZone)?.time ?: continue
+        val endTime = parseEventDateTime(event.end.dateTime, event.end.timeZone)?.time ?: continue
+        val durationInMinutes = TimeUnit.MILLISECONDS.toMinutes(endTime - startTime)
+
+        if (endTime > now && durationInMinutes >= Constants.MIN_TIMER_MINUTE) {
+            val countdownStartTime = endTime - Constants.TEN_MINUTES_IN_MILLIS
+
+            // Only schedule if the countdown start time is in the future
+            if (countdownStartTime > now) {
+                // Create an Intent that points to our BroadcastReceiver
+                val intent = Intent(context, CountdownAlarmReceiver::class.java).apply {
+                    putExtra(CountdownWorker.KEY_MEETING_SUBJECT, event.subject)
+                    putExtra(CountdownWorker.KEY_END_TIME_MILLIS, endTime)
+                }
+
+                // Create a unique PendingIntent for each meeting alarm
+                val pendingIntent = PendingIntent.getBroadcast(
+                    context,
+                    event.id.hashCode(), // Use meeting ID hashcode for a unique request code
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+
+                // Schedule the alarm to wake up the device and run at the exact time
+                try {
+                    alarmManager.setExactAndAllowWhileIdle(
+                        AlarmManager.RTC_WAKEUP,
+                        countdownStartTime,
+                        pendingIntent
+                    )
+                    Log.d("Scheduler", "Scheduled EXACT ALARM for ${event.subject} at ${Date(countdownStartTime)}")
+                } catch (e: SecurityException) {
+                    Log.e("Scheduler", "Could not schedule exact alarm. Check permissions.", e)
+                    // You might need to request SCHEDULE_EXACT_ALARM permission on Android 12+
+                }
+            }
+        }
+    }
+}*/

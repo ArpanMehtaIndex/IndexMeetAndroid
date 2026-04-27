@@ -1,0 +1,563 @@
+{
+  "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users('auh%40index.ae')/calendarView",
+  "value": [
+    {
+      "attendees": [
+        {
+          "emailAddress": {
+            "address": "zenaidalyn.zoilo@index.ae",
+            "name": "Zenaidalyn Zoilo"
+          },
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required"
+        },
+        {
+          "emailAddress": {
+            "address": "auh@index.ae",
+            "name": "Abu Dhabi Meeting Room"
+          },
+          "status": {
+            "response": "accepted",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "resource"
+        }
+      ],
+      "body": {
+        "content": "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta name=\"Generator\" content=\"Microsoft Exchange Server\">\r\n<!-- converted from text -->\r\n<style><!-- .EmailQuote { margin-left: 1pt; padding-left: 4pt; border-left: #800000 2px solid; } --></style></head>\r\n<body>\r\n<font size=\"2\"><span style=\"font-size:11pt;\"><div class=\"PlainText\">&nbsp;</div></span></font>\r\n</body>\r\n</html>\r\n",
+        "contentType": "html"
+      },
+      "end": {
+        "dateTime": "2026-01-26T05:40:00.0000000",
+        "timeZone": "UTC"
+      },
+      "id": "AAMkAGNlNGFhMzdmLTUwMjUtNGFmYS05NTlmLTZlZGIyYTA1YzE0NABGAAAAAADYPtUT3UQ5Qr6s-0BMfVGEBwBNezMrF4SuT7uY2N5Va7tPAAAAAAENAABNezMrF4SuT7uY2N5Va7tPAAB4_WNRAAA=",
+      "isAllDay": false,
+      "isCancelled": false,
+      "location": {},
+      "locations": [
+        {}
+      ],
+      "organizer": {
+        "emailAddress": {
+          "address": "zenaidalyn.zoilo@index.ae",
+          "name": "Zenaidalyn Zoilo"
+        }
+      },
+      "start": {
+        "dateTime": "2026-01-26T05:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "subject": "Zenaidalyn Zoilo "
+    },
+    {
+      "attendees": [
+        {
+          "emailAddress": {
+            "address": "Yovana.motwani@index.ae",
+            "name": "Yovana Motwani"
+          },
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required"
+        },
+        {
+          "emailAddress": {
+            "address": "auh@index.ae",
+            "name": "Abu Dhabi Meeting Room"
+          },
+          "status": {
+            "response": "accepted",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "resource"
+        }
+      ],
+      "body": {
+        "content": "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta name=\"Generator\" content=\"Microsoft Exchange Server\">\r\n<!-- converted from text -->\r\n<style><!-- .EmailQuote { margin-left: 1pt; padding-left: 4pt; border-left: #800000 2px solid; } --></style></head>\r\n<body>\r\n<font size=\"2\"><span style=\"font-size:11pt;\"><div class=\"PlainText\">&nbsp;</div></span></font>\r\n</body>\r\n</html>\r\n",
+        "contentType": "html"
+      },
+      "end": {
+        "dateTime": "2026-01-26T06:30:00.0000000",
+        "timeZone": "UTC"
+      },
+      "id": "AAMkAGNlNGFhMzdmLTUwMjUtNGFmYS05NTlmLTZlZGIyYTA1YzE0NABGAAAAAADYPtUT3UQ5Qr6s-0BMfVGEBwBNezMrF4SuT7uY2N5Va7tPAAAAAAENAABNezMrF4SuT7uY2N5Va7tPAABxdKvOAAA=",
+      "isAllDay": false,
+      "isCancelled": false,
+      "location": {},
+      "locations": [
+        {},
+        {}
+      ],
+      "organizer": {
+        "emailAddress": {
+          "address": "Yovana.motwani@index.ae",
+          "name": "Yovana Motwani"
+        }
+      },
+      "start": {
+        "dateTime": "2026-01-26T06:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "subject": "Yovana Motwani "
+    },
+    {
+      "attendees": [
+        {
+          "emailAddress": {
+            "address": "Yovana.motwani@index.ae",
+            "name": "Yovana Motwani"
+          },
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required"
+        },
+        {
+          "emailAddress": {
+            "address": "auh@index.ae",
+            "name": "Abu Dhabi Meeting Room"
+          },
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "resource"
+        },
+        {
+          "emailAddress": {
+            "address": "julie.domingo@index.ae",
+            "name": "Julie Domingo"
+          },
+          "status": {
+            "response": "accepted",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required"
+        }
+      ],
+      "body": {
+        "content": "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta name=\"Generator\" content=\"Microsoft Exchange Server\">\r\n<!-- converted from text -->\r\n<style><!-- .EmailQuote { margin-left: 1pt; padding-left: 4pt; border-left: #800000 2px solid; } --></style></head>\r\n<body>\r\n<font size=\"2\"><span style=\"font-size:11pt;\"><div class=\"PlainText\">&nbsp;</div></span></font>\r\n</body>\r\n</html>\r\n",
+        "contentType": "html"
+      },
+      "end": {
+        "dateTime": "2026-01-26T07:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "id": "AAMkAGNlNGFhMzdmLTUwMjUtNGFmYS05NTlmLTZlZGIyYTA1YzE0NABGAAAAAADYPtUT3UQ5Qr6s-0BMfVGEBwBNezMrF4SuT7uY2N5Va7tPAAAAAAENAABNezMrF4SuT7uY2N5Va7tPAABxdKvPAAA=",
+      "isAllDay": false,
+      "isCancelled": false,
+      "location": {},
+      "locations": [
+        {}
+      ],
+      "organizer": {
+        "emailAddress": {
+          "address": "Yovana.motwani@index.ae",
+          "name": "Yovana Motwani"
+        }
+      },
+      "start": {
+        "dateTime": "2026-01-26T06:30:00.0000000",
+        "timeZone": "UTC"
+      },
+      "subject": "Yovana Motwani "
+    },
+    {
+      "attendees": [
+        {
+          "emailAddress": {
+            "address": "Yovana.motwani@index.ae",
+            "name": "Yovana Motwani"
+          },
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required"
+        },
+        {
+          "emailAddress": {
+            "address": "auh@index.ae",
+            "name": "Abu Dhabi Meeting Room"
+          },
+          "status": {
+            "response": "accepted",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "resource"
+        }
+      ],
+      "body": {
+        "content": "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta name=\"Generator\" content=\"Microsoft Exchange Server\">\r\n<!-- converted from text -->\r\n<style><!-- .EmailQuote { margin-left: 1pt; padding-left: 4pt; border-left: #800000 2px solid; } --></style></head>\r\n<body>\r\n<font size=\"2\"><span style=\"font-size:11pt;\"><div class=\"PlainText\">&nbsp;</div></span></font>\r\n</body>\r\n</html>\r\n",
+        "contentType": "html"
+      },
+      "end": {
+        "dateTime": "2026-01-26T07:30:00.0000000",
+        "timeZone": "UTC"
+      },
+      "id": "AAMkAGNlNGFhMzdmLTUwMjUtNGFmYS05NTlmLTZlZGIyYTA1YzE0NABGAAAAAADYPtUT3UQ5Qr6s-0BMfVGEBwBNezMrF4SuT7uY2N5Va7tPAAAAAAENAABNezMrF4SuT7uY2N5Va7tPAABxdKvRAAA=",
+      "isAllDay": false,
+      "isCancelled": false,
+      "location": {},
+      "locations": [
+        {}
+      ],
+      "organizer": {
+        "emailAddress": {
+          "address": "Yovana.motwani@index.ae",
+          "name": "Yovana Motwani"
+        }
+      },
+      "start": {
+        "dateTime": "2026-01-26T07:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "subject": "Yovana Motwani "
+    },
+    {
+      "attendees": [
+        {
+          "emailAddress": {
+            "address": "Yovana.motwani@index.ae",
+            "name": "Yovana Motwani"
+          },
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required"
+        },
+        {
+          "emailAddress": {
+            "address": "auh@index.ae",
+            "name": "Abu Dhabi Meeting Room"
+          },
+          "status": {
+            "response": "accepted",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "optional"
+        }
+      ],
+      "body": {
+        "content": "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta name=\"Generator\" content=\"Microsoft Exchange Server\">\r\n<!-- converted from text -->\r\n<style><!-- .EmailQuote { margin-left: 1pt; padding-left: 4pt; border-left: #800000 2px solid; } --></style></head>\r\n<body>\r\n<font size=\"2\"><span style=\"font-size:11pt;\"><div class=\"PlainText\">&nbsp;</div></span></font>\r\n</body>\r\n</html>\r\n",
+        "contentType": "html"
+      },
+      "end": {
+        "dateTime": "2026-01-26T08:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "id": "AAMkAGNlNGFhMzdmLTUwMjUtNGFmYS05NTlmLTZlZGIyYTA1YzE0NABGAAAAAADYPtUT3UQ5Qr6s-0BMfVGEBwBNezMrF4SuT7uY2N5Va7tPAAAAAAENAABNezMrF4SuT7uY2N5Va7tPAABxdKvSAAA=",
+      "isAllDay": false,
+      "isCancelled": false,
+      "location": {},
+      "locations": [
+        {}
+      ],
+      "organizer": {
+        "emailAddress": {
+          "address": "Yovana.motwani@index.ae",
+          "name": "Yovana Motwani"
+        }
+      },
+      "start": {
+        "dateTime": "2026-01-26T07:30:00.0000000",
+        "timeZone": "UTC"
+      },
+      "subject": "Yovana Motwani "
+    },
+    {
+      "attendees": [
+        {
+          "emailAddress": {
+            "address": "Yovana.motwani@index.ae",
+            "name": "Yovana Motwani"
+          },
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required"
+        },
+        {
+          "emailAddress": {
+            "address": "auh@index.ae",
+            "name": "Abu Dhabi Meeting Room"
+          },
+          "status": {
+            "response": "accepted",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "optional"
+        }
+      ],
+      "body": {
+        "content": "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta name=\"Generator\" content=\"Microsoft Exchange Server\">\r\n<!-- converted from text -->\r\n<style><!-- .EmailQuote { margin-left: 1pt; padding-left: 4pt; border-left: #800000 2px solid; } --></style></head>\r\n<body>\r\n<font size=\"2\"><span style=\"font-size:11pt;\"><div class=\"PlainText\">&nbsp;</div></span></font>\r\n</body>\r\n</html>\r\n",
+        "contentType": "html"
+      },
+      "end": {
+        "dateTime": "2026-01-26T08:10:00.0000000",
+        "timeZone": "UTC"
+      },
+      "id": "AAMkAGNlNGFhMzdmLTUwMjUtNGFmYS05NTlmLTZlZGIyYTA1YzE0NABGAAAAAADYPtUT3UQ5Qr6s-0BMfVGEBwBNezMrF4SuT7uY2N5Va7tPAAAAAAENAABNezMrF4SuT7uY2N5Va7tPAABxdKvTAAA=",
+      "isAllDay": false,
+      "isCancelled": false,
+      "location": {},
+      "locations": [
+        {}
+      ],
+      "organizer": {
+        "emailAddress": {
+          "address": "Yovana.motwani@index.ae",
+          "name": "Yovana Motwani"
+        }
+      },
+      "start": {
+        "dateTime": "2026-01-26T07:30:00.0000000",
+        "timeZone": "UTC"
+      },
+      "subject": "Yovana Motwani "
+    },
+    {
+      "attendees": [
+        {
+          "emailAddress": {
+            "address": "Yovana.motwani@index.ae",
+            "name": "Yovana Motwani"
+          },
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required"
+        },
+        {
+          "emailAddress": {
+            "address": "auh@index.ae",
+            "name": "Abu Dhabi Meeting Room"
+          },
+          "status": {
+            "response": "accepted",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "resource"
+        }
+      ],
+      "body": {
+        "content": "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta name=\"Generator\" content=\"Microsoft Exchange Server\">\r\n<!-- converted from text -->\r\n<style><!-- .EmailQuote { margin-left: 1pt; padding-left: 4pt; border-left: #800000 2px solid; } --></style></head>\r\n<body>\r\n<font size=\"2\"><span style=\"font-size:11pt;\"><div class=\"PlainText\">&nbsp;</div></span></font>\r\n</body>\r\n</html>\r\n",
+        "contentType": "html"
+      },
+      "end": {
+        "dateTime": "2026-01-26T09:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "id": "AAMkAGNlNGFhMzdmLTUwMjUtNGFmYS05NTlmLTZlZGIyYTA1YzE0NABGAAAAAADYPtUT3UQ5Qr6s-0BMfVGEBwBNezMrF4SuT7uY2N5Va7tPAAAAAAENAABNezMrF4SuT7uY2N5Va7tPAABxdKvUAAA=",
+      "isAllDay": false,
+      "isCancelled": false,
+      "location": {},
+      "locations": [
+        {},
+        {}
+      ],
+      "organizer": {
+        "emailAddress": {
+          "address": "Yovana.motwani@index.ae",
+          "name": "Yovana Motwani"
+        }
+      },
+      "start": {
+        "dateTime": "2026-01-26T08:30:00.0000000",
+        "timeZone": "UTC"
+      },
+      "subject": "Yovana Motwani "
+    },
+    {
+      "attendees": [
+        {
+          "emailAddress": {
+            "address": "khadija.khan@index.ae",
+            "name": "Khadija Khan"
+          },
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required"
+        },
+        {
+          "emailAddress": {
+            "address": "w.ezzeddine@index.ae",
+            "name": "Wissam Ezzeddine"
+          },
+          "status": {
+            "response": "accepted",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required"
+        },
+        {
+          "emailAddress": {
+            "address": "a.ibrahim@index.ae",
+            "name": "Amir Ibrahim"
+          },
+          "status": {
+            "response": "notResponded",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required"
+        },
+        {
+          "emailAddress": {
+            "address": "auh@index.ae",
+            "name": "Abu Dhabi Meeting Room"
+          },
+          "status": {
+            "response": "accepted",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "resource"
+        }
+      ],
+      "body": {
+        "content": "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta name=\"Generator\" content=\"Microsoft Exchange Server\">\r\n<!-- converted from text -->\r\n<style><!-- .EmailQuote { margin-left: 1pt; padding-left: 4pt; border-left: #800000 2px solid; } --></style></head>\r\n<body>\r\n<font size=\"2\"><span style=\"font-size:11pt;\"><div class=\"PlainText\">&nbsp;</div></span></font>\r\n</body>\r\n</html>\r\n",
+        "contentType": "html"
+      },
+      "end": {
+        "dateTime": "2026-01-26T10:30:00.0000000",
+        "timeZone": "UTC"
+      },
+      "id": "AAMkAGNlNGFhMzdmLTUwMjUtNGFmYS05NTlmLTZlZGIyYTA1YzE0NABGAAAAAADYPtUT3UQ5Qr6s-0BMfVGEBwBNezMrF4SuT7uY2N5Va7tPAAAAAAENAABNezMrF4SuT7uY2N5Va7tPAAB3DdWyAAA=",
+      "isAllDay": false,
+      "isCancelled": false,
+      "location": {},
+      "locations": [
+        {}
+      ],
+      "organizer": {
+        "emailAddress": {
+          "address": "khadija.khan@index.ae",
+          "name": "Khadija Khan"
+        }
+      },
+      "start": {
+        "dateTime": "2026-01-26T10:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "subject": "Khadija Khan "
+    },
+    {
+      "attendees": [
+        {
+          "emailAddress": {
+            "address": "khadija.khan@index.ae",
+            "name": "Khadija Khan"
+          },
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required"
+        },
+        {
+          "emailAddress": {
+            "address": "auh@index.ae",
+            "name": "Abu Dhabi Meeting Room"
+          },
+          "status": {
+            "response": "accepted",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "resource"
+        }
+      ],
+      "body": {
+        "content": "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta name=\"Generator\" content=\"Microsoft Exchange Server\">\r\n<!-- converted from text -->\r\n<style><!-- .EmailQuote { margin-left: 1pt; padding-left: 4pt; border-left: #800000 2px solid; } --></style></head>\r\n<body>\r\n<font size=\"2\"><span style=\"font-size:11pt;\"><div class=\"PlainText\">&nbsp;</div></span></font>\r\n</body>\r\n</html>\r\n",
+        "contentType": "html"
+      },
+      "end": {
+        "dateTime": "2026-01-26T11:00:00.0000000",
+        "timeZone": "UTC"
+      },
+      "id": "AAMkAGNlNGFhMzdmLTUwMjUtNGFmYS05NTlmLTZlZGIyYTA1YzE0NABGAAAAAADYPtUT3UQ5Qr6s-0BMfVGEBwBNezMrF4SuT7uY2N5Va7tPAAAAAAENAABNezMrF4SuT7uY2N5Va7tPAAB3DdWzAAA=",
+      "isAllDay": false,
+      "isCancelled": false,
+      "location": {},
+      "locations": [
+        {}
+      ],
+      "onlineMeeting": {
+        "joinUrl": "https://teams.microsoft.com/l/meetup-join/19%3ameeting_YTRkZWM1YjYtNGZmZC00MjQ2LWFkMjctYmFlNmJkYmM5ZTBm%40thread.v2/0?context=%7b%22Tid%22%3a%224474ca65-41c1-4778-bd9a-d12d3b5ba33e%22%2c%22Oid%22%3a%22dd49c309-5400-47c2-931d-58ad1deddba7%22%7d"
+      },
+      "organizer": {
+        "emailAddress": {
+          "address": "khadija.khan@index.ae",
+          "name": "Khadija Khan"
+        }
+      },
+      "start": {
+        "dateTime": "2026-01-26T10:30:00.0000000",
+        "timeZone": "UTC"
+      },
+      "subject": "Khadija Khan "
+    },
+    {
+      "attendees": [
+        {
+          "emailAddress": {
+            "address": "khadija.khan@index.ae",
+            "name": "Khadija Khan"
+          },
+          "status": {
+            "response": "none",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "required"
+        },
+        {
+          "emailAddress": {
+            "address": "auh@index.ae",
+            "name": "Abu Dhabi Meeting Room"
+          },
+          "status": {
+            "response": "accepted",
+            "time": "0001-01-01T00:00:00Z"
+          },
+          "type": "resource"
+        }
+      ],
+      "body": {
+        "content": "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta name=\"Generator\" content=\"Microsoft Exchange Server\">\r\n<!-- converted from text -->\r\n<style><!-- .EmailQuote { margin-left: 1pt; padding-left: 4pt; border-left: #800000 2px solid; } --></style></head>\r\n<body>\r\n<font size=\"2\"><span style=\"font-size:11pt;\"><div class=\"PlainText\">&nbsp;</div></span></font>\r\n</body>\r\n</html>\r\n",
+        "contentType": "html"
+      },
+      "end": {
+        "dateTime": "2026-01-26T12:30:00.0000000",
+        "timeZone": "UTC"
+      },
+      "id": "AAMkAGNlNGFhMzdmLTUwMjUtNGFmYS05NTlmLTZlZGIyYTA1YzE0NABGAAAAAADYPtUT3UQ5Qr6s-0BMfVGEBwBNezMrF4SuT7uY2N5Va7tPAAAAAAENAABNezMrF4SuT7uY2N5Va7tPAAB3DdW0AAA=",
+      "isAllDay": false,
+      "isCancelled": false,
+      "location": {},
+      "locations": [
+        {}
+      ],
+      "organizer": {
+        "emailAddress": {
+          "address": "khadija.khan@index.ae",
+          "name": "Khadija Khan"
+        }
+      },
+      "start": {
+        "dateTime": "2026-01-26T11:50:00.0000000",
+        "timeZone": "UTC"
+      },
+      "subject": "Khadija Khan "
+    }
+  ]
+}
