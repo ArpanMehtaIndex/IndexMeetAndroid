@@ -16,6 +16,32 @@ This app is built for meeting-room display screens, especially Android TV device
 - Supports overlay-based alerts on TV devices.
 - Uses boot and wake recovery so the app can resume after restart or sleep.
 
+## Screenshots
+
+### Select Room
+
+Choose the meeting room / emirate before the app starts tracking the active meeting.
+
+![Select Room](Screenshots/Select_Room.jpg)
+
+### Dashboard Countdown
+
+Shows the active meeting state and countdown experience on the main dashboard.
+
+![Dashboard Countdown](Screenshots/Dashboard_Countdown.jpg)
+
+### Notification Countdown
+
+Displays the ongoing meeting countdown in the notification area.
+
+![Notification Countdown](Screenshots/Notification_Countdown.jpg)
+
+### Meeting Concluded Warning
+
+Warns users when the meeting has ended and the room should be made available.
+
+![Meeting Concluded Warning](Screenshots/Time_Concluded_Warning.jpg)
+
 ## Project Structure
 
 - `app/src/main/java/com/index/demoindexmettingroomreminderapp/ui/activity`
