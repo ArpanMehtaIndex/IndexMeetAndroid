@@ -10,7 +10,6 @@ object Constants {
     const val MEETING_STATUS_NOTIFICATION_ID=54321
     const val LEGACY_MEETING_WORKER_NAME="meeting_end_"
     const val COUNTDOWN_TOKEN_WORKER_NAME="countdown_worker_"
-    const val MEETING_END_WORKER_NAME="meeting_end_worker_"
     const val SPLASH_WELCOME_MESSAGE="Welcome to"
     const val APP_NAME="Index Meet"
     const val ONGOING_MEETING="On going meeting"

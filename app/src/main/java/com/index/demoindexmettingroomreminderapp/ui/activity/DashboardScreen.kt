@@ -67,12 +67,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.work.Constraints
-import androidx.work.Data
 import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.OutOfQuotaPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.index.demoindexmettingroomreminderapp.BuildConfig
@@ -87,8 +83,6 @@ import com.index.demoindexmettingroomreminderapp.web.UiState
 import com.index.demoindexmettingroomreminderapp.web.model.response.CalendarEvent
 import com.index.demoindexmettingroomreminderapp.worker.TokenRefreshWorker
 import com.index.demoindexmettingroomreminderapp.worker.countdown.CountdownScheduler
-import com.index.demoindexmettingroomreminderapp.worker.countdown.CountdownWorker
-import com.index.demoindexmettingroomreminderapp.worker.countdown.MeetingEndWorker
 import com.index.demoindexmettingroomreminderapp.worker.sync.MeetingSyncScheduler
 import kotlinx.coroutines.delay
 import java.util.Date
@@ -164,7 +158,6 @@ fun DashboardScreen(
         }
     }
 
-    // --- EFFECT 3: Listen for triggers from the MeetingEndWorker ---
     LaunchedEffect(activeCountdownMeetingId) {
         // `snapshotFlow` creates a flow from a composable's state.
         snapshotFlow { activeCountdownMeetingId }
@@ -214,12 +207,6 @@ fun DashboardScreen(
                 }
             }
 
-            /*if (activeMeeting != null) {
-                // 1. Schedule future workers
-                scheduleMeetingEndWorkers(context, meetings, activeMeeting)
-            }
-            // 2. Check if a countdown should be running RIGHT NOW
-            meetingAppViewModel.checkAndStartCountdownIfNeeded()*/
         }
     }
 
@@ -429,71 +416,6 @@ fun DashboardScreen(
                         showDialog = false
                         meetingAppViewModel.fetchAccessToken()
                     }
-                )
-            }
-        }
-    }
-}
-
-/**
- * Class: DashboardScreen.kt
- * Method: scheduleMeetingEndWorkers
- * Created By: Arpan Mehta
- * Created On: 05/02/2026
- * Modified On: 05/02/2026
- * Param: [context: Context, meetings: List<CalendarEvent>, activeMeeting: CalendarEvent]
- * Description: Schedules end-of-meeting workers for countdown handling.
- **/
-private fun scheduleMeetingEndWorkers(
-    context: Context,
-    meetings: List<CalendarEvent>,
-    activeMeeting: CalendarEvent
-) {
-    val workManager = WorkManager.getInstance(context)
-
-    for (event in meetings) {
-        workManager.cancelUniqueWork("${Constants.LEGACY_MEETING_WORKER_NAME}${event.id}")
-        val now = System.currentTimeMillis()
-        val startTime = parseEventDateTime(event.start.dateTime, event.start.timeZone)?.time ?: continue
-        val endTime = parseEventDateTime(event.end.dateTime, event.end.timeZone)?.time ?: continue
-
-        val durationInMinutes = TimeUnit.MILLISECONDS.toMinutes(endTime - startTime)
-
-        if (endTime > now && durationInMinutes >= Constants.MIN_TIMER_MINUTE) {
-            // Calculate when the countdown should start
-            val countdownStartTime = endTime - Constants.TEN_MINUTES_IN_MILLIS
-            val initialDelay = countdownStartTime - now
-
-            AppLog.d("MainActivity", "Subject:>>>>>>>>>" + event.subject)
-
-            // Only schedule if the countdown start time is in the future
-            if (initialDelay > 0) {
-                val inputData = Data.Builder()
-                    .putString(MeetingEndWorker.KEY_MEETING_ID, activeMeeting.id)
-                    .putString(MeetingEndWorker.KEY_MEETING_SUBJECT, activeMeeting.subject)
-                    .putLong(MeetingEndWorker.KEY_MEETING_END_TIME, endTime)
-                    .putLong(MeetingEndWorker.KEY_MEETING_START_TIME, startTime)
-                    .build()
-
-                val constraints = Constraints.Builder()
-                    .setRequiredNetworkType(NetworkType.CONNECTED)
-                    .build()
-
-                val request = OneTimeWorkRequestBuilder<MeetingEndWorker>()
-                    .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-//                    .setInitialDelay(initialDelay, TimeUnit.MILLISECONDS) // <-- Use setInitialDelay
-                    .setInputData(inputData)
-                    .setConstraints(constraints)
-                    .build()
-
-                workManager.enqueueUniqueWork(
-                    "${Constants.MEETING_END_WORKER_NAME}${event.id}",
-                    ExistingWorkPolicy.REPLACE,
-                    request
-                )
-                Log.d(
-                    "Scheduler",
-                    "Scheduled worker for ${event.subject} to run in ${initialDelay / 1000}s"
                 )
             }
         }
