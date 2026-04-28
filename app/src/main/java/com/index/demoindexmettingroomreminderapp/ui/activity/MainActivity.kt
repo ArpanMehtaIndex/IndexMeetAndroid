@@ -1,11 +1,13 @@
 package com.index.demoindexmettingroomreminderapp.ui.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -18,6 +20,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.index.demoindexmettingroomreminderapp.utils.AppLog
+import androidx.core.net.toUri
 
 class MainActivity : ComponentActivity() {
 
@@ -38,8 +41,8 @@ class MainActivity : ComponentActivity() {
 
         askOverlayPermission()
         askNotificationPermission()
+        askBatteryOptimizationPermission()
         setContent {
-            // Call SplashScreen composable
             AppNavigation()
         }
     }
@@ -62,19 +65,28 @@ class MainActivity : ComponentActivity() {
 
     private fun askOverlayPermission() {
         // This is only necessary for Android 6.0 (M) and above.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!Settings.canDrawOverlays(this)) {
-                AppLog.d("MainActivity","Overlay permission not granted. Launching settings.")
-                // Create an intent to launch the specific settings screen for this app.
-                val intent = Intent(
-                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:$packageName")
-                )
-                // Launch the settings screen to let the user grant the permission.
-                startActivity(intent)
-            } else {
-                AppLog.d("MainActivity","Overlay permission is already granted.")
+        if (!Settings.canDrawOverlays(this)) {
+            AppLog.d("MainActivity","Overlay permission not granted. Launching settings.")
+            // Create an intent to launch the specific settings screen for this app.
+            val intent = Intent(
+                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                "package:$packageName".toUri()
+            )
+            // Launch the settings screen to let the user grant the permission.
+            startActivity(intent)
+        } else {
+            AppLog.d("MainActivity","Overlay permission is already granted.")
+        }
+    }
+
+    @SuppressLint("BatteryLife")
+    private fun askBatteryOptimizationPermission() {
+        val powerManager = getSystemService(POWER_SERVICE) as PowerManager
+        if (!powerManager.isIgnoringBatteryOptimizations(packageName)) {
+            val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+                data = "package:$packageName".toUri()
             }
+            startActivity(intent)
         }
     }
 }
@@ -91,4 +103,3 @@ fun AppNavigation() {
         }
     }
 }
-

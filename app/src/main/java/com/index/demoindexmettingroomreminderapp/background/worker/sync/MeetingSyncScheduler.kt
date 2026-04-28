@@ -24,7 +24,7 @@ object MeetingSyncScheduler {
         )
     }
 
-    fun scheduleNextSync(context: Context, delayMillis: Long = Constants.TEN_MINUTES_IN_MILLIS) {
+    fun scheduleNextSync(context: Context, delayMillis: Long = Constants.TWENTY_MINUTES_IN_MILLIS) {
         val request = OneTimeWorkRequestBuilder<MeetingSyncWorker>()
             .setConstraints(syncConstraints())
             .setInitialDelay(delayMillis, TimeUnit.MILLISECONDS)

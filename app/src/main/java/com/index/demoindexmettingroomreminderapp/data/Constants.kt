@@ -40,6 +40,8 @@ object Constants {
     val THEME_COLOR = Color(0xFF1B68A5)
     val MEETING_HIGH_LIGHT_COLOR = Color(0xFFC8E6C9)
     const val TEN_MINUTES_IN_MILLIS = 10 * 60 * 1000L // 10 minutes in milliseconds
+    const val TWENTY_MINUTES_IN_MILLIS = 20 * 60 * 1000L // 10 minutes in milliseconds
+
     const val MIN_TIMER_MINUTE=10
     const val TOP_MEETING_COUNT="1000"
     const val MINUTES="minutes"
